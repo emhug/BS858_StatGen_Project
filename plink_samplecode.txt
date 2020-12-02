@@ -1,0 +1,28 @@
+Part 2, final project
+Assess the 16 SNPs in the plink files for Hardy-Weinberg Equilibrium and report your findings.  State clearly which individuals you used for the analyses, and why. Interpret your results:  is there departure from HWE for any of the SNPs?  Do your findings suggest that you should omit any SNPs from the subsequent analyses?  If so, which SNPs? Explain your decision. Even if you find SNPs that depart from HWE, please continue to use all SNPs in subsequent analyses.
+
+First, we need to create the binary files for plink to use. This was done using the following code:
+    plink --file project --make-bed --out project
+This created the .bed, .bim, and project.log files.
+
+Now we need to see if the SNPs are in HWE. 
+    plink --bfile project --hardy --out hwe_part2
+This created the hwe_part2.log and hwe_part2.hwe files.
+
+Opening this output with Excel showed that all 16 SNPs are in HWE for the entire population (affected and unaffected). 
+
+Part 3, final project
+Determine and report the minor allele frequency of each SNP in your study.  State which individuals you use to report allele frequencies, and why you chose those individuals.   Compare these frequencies to those in the Willems et al. studyin a table.  Discuss any implications of your findings for your replication study.
+
+To determine the minor allele frequency, we can run the following code.
+    plink --bfile project --freq --out maf_part3
+This created maf_part3.frq and maf_part3.log files.
+
+
+Part 7 and 8
+
+Determine association between SNPs and Grip strength
+plink --bfile project --linear hethom --pheno project.pheno --pheno-name GRIP --covar project.covar --out part7
+
+Determine association between SNP and bone fracture status
+plink --bfile project --logistic hethom --pheno project.pheno --pheno-name FRAC --covar project.covar --covar-name age bmi hgt --out part8_newadjust
